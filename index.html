@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Worker</title>
+</head>
+
+<body>
+    <div id="result"></div>
+    <button id="btn">run</button>
+    <script>
+        document.querySelector('#btn').addEventListener('click', () => {
+            const worker = new Worker('./worker.js');
+
+            worker.addEventListener('message', function(e) {
+                const div = document.createElement('div');
+                div.textContent = e.data; // 0.1238917491
+                document.querySelector('#result').appendChild(div);
+                worker.terminate();
+            });
+            worker.postMessage('일해라 워커!')
+        });
+    </script>
+    <!-- <script>
+        function sleep(delay) {
+            const start = new Date().getTime();
+            while (new Date().getTime() < start + delay);
+        }
+
+        document.querySelector('#btn').addEventListener('click', () => {
+            sleep(3000); // 3초 딜레이 시킴
+            const div = document.createElement('div');
+            div.textContent = Math.random();
+            document.querySelector('#result').appendChild(div);
+        });
+    </script> -->
+</body>
+
+</html>
